@@ -53,5 +53,7 @@ public class Driver2 {
         }
 
         scanner.close();
+
+        System.exit(0);
     }
 }
