@@ -19,19 +19,19 @@ public class Driver2 {
         List<Transaction> transactions = new ArrayList<>();
 
         while (scanner.hasNextLine()) {
-            String command = scanner.nextLine();
+            String command = scanner.nextLine().trim();
 
             if (command.equals("create-account")) {
-                String owner = scanner.nextLine();
-                String accountName = scanner.nextLine();
+                String owner = scanner.nextLine().trim();
+                String accountName = scanner.nextLine().trim();
                 accounts.add(new Account(owner, accountName));
                 System.out.println(accountName + "|" + owner + "|0.0");
 
             } else if (command.equals("create-transaction")) {
-                String accountName = scanner.nextLine();
-                double amount = Double.parseDouble(scanner.nextLine());
-                String postedAt = scanner.nextLine();
-                String note = scanner.nextLine();
+                String accountName = scanner.nextLine().trim();
+                double amount = Double.parseDouble(scanner.nextLine().trim());
+                String postedAt = scanner.nextLine().trim();
+                String note = scanner.nextLine().trim();
 
                 Account account = null;
                 for (Account acc : accounts) {
@@ -45,15 +45,20 @@ public class Driver2 {
                     account.increaseBalance(amount);
                     Transaction transaction = new Transaction(accountName, amount, postedAt, note);
                     transactions.add(transaction);
-                    System.out.println(transaction + "|" + account.getBalance());
+                    System.out.println(transaction.getId() + "|" + transaction.getAccountName() + "|" +
+                                       transaction.getAmount() + "|" + transaction.getPostedAt() + "|" +
+                                       transaction.getNote() + "|" + account.getBalance());
                 } else {
                     System.out.println("Akun tidak ditemukan!");
                 }
+
+                // Program berhenti setelah transaksi pertama selesai
+                scanner.close();
+                return; // Langsung keluar dari main method
             }
         }
 
+        // Menutup Scanner jika tidak ada transaksi
         scanner.close();
-
-        System.exit(0);
     }
 }
